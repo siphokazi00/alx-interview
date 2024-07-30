@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 """
-Displays Pascal's triangle
+Pascal's triangle
 """
 def pascal_triangle(n):
+    """
+    Computes and displays Pascal's triangle
+    """
     if n <= 0:
         return []
 
