@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This script reads lines from stdin and computes metrics including total file size and the count of specific HTTP status codes.
+This script reads lines from stdin and computes metrics.
 """
 
 import sys
@@ -38,12 +38,22 @@ def process_line(line, total_size, status_codes):
 
 def main():
     total_size = 0
-    status_codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+    status_codes = {
+            200: 0,
+            301: 0,
+            400: 0,
+            401: 0,
+            403: 0,
+            404: 0,
+            405: 0,
+            500: 0
+            }
     line_count = 0
 
     try:
         for line in sys.stdin:
-            total_size, status_codes = process_line(line.strip(), total_size, status_codes)
+            total_size, status_codes = process_line(line.strip(),
+                                                    total_size, status_codes)
             line_count += 1
 
             if line_count % 10 == 0:
@@ -54,6 +64,7 @@ def main():
         raise
 
     print_stats(total_size, status_codes)
+
 
 if __name__ == "__main__":
     main()
