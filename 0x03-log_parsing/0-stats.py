@@ -37,6 +37,9 @@ def process_line(line, total_size, status_codes):
 
 
 def main():
+    """
+    Entry point
+    """
     total_size = 0
     status_codes = {
             200: 0,
