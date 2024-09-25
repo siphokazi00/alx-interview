@@ -1,5 +1,9 @@
 #!/usr/bin/python3
+""" Returns the perimeter of a given island """
+
+
 def island_perimeter(grid):
+    """ Defines the grid boundaries """
     perimeter = 0
 
     # Number of rows and columns in the grid
