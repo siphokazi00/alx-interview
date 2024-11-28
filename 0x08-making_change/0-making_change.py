@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+Determines the fewest number of coins needed to meet given total
+"""
 def makeChange(coins, total):
     """Det the fewest no. of coins needed to meet a given total."""
     if total <= 0:
