@@ -1,7 +1,7 @@
 #!/usr/bin/node
 const request = require('request');
 
-function getMovieCharacters(movieId) {
+function getMovieCharacters (movieId) {
   const baseUrl = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
 
   request(baseUrl, (error, response, body) => {
