@@ -1,40 +1,34 @@
 #!/usr/bin/node
-const request = require('request');
+const axios = require("axios");
 
-const movieID = process.argv[2];
+async function getMovieCharacters(movieId) {
+  const baseUrl = "https://swapi-api.alx-tools.com/api/films/";
 
-const apiUrl = `https://swapi-api.alx-tools.com/api/films/${movieID}/`;
-
-function fetchMovieCharacters() {
-  request(apiUrl, (error, response, body) => {
-    if (error) {
-      console.error('Error fetching the movie:', error);
-      return;
-    }
-
-    if (response.statusCode !== 200) {
-      console.error('Invalid response:', response.statusCode);
-      return;
-    }
-
-    const movieData = JSON.parse(body);
+  try {
+    const movieResponse = await axios.get(`${baseUrl}${movieId}/`);
+    const movieData = movieResponse.data;
 
     const characters = movieData.characters;
 
-    characters.forEach((characterUrl) => {
-      request(characterUrl, (error, response, body) => {
-        if (error) {
-          console.error('Error fetching character:', error);
-          return;
-        }
-
-        if (response.statusCode === 200) {
-          const characterData = JSON.parse(body);
-          console.log(characterData.name);
-        }
-      });
-    });
-  });
+    for (const characterUrl of characters) {
+      try {
+        const characterResponse = await axios.get(characterUrl);
+        const characterData = characterResponse.data;
+        console.log(characterData.name);
+      } catch (err) {
+        console.error(`Error fetching character: ${characterUrl}`);
+      }
+    }
+  } catch (err) {
+    console.error("Error fetching movie data:", err.message);
+  }
 }
 
-fetchMovieCharacters();
+const movieId = process.argv[2];
+
+if (!movieId) {
+  console.error("Usage: node star_wars_characters.js <Movie ID>");
+  process.exit(1);
+}
+
+getMovieCharacters(movieId);
